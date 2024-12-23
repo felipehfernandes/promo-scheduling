@@ -1,6 +1,7 @@
 from models.database import get_connection
 from models.promocao import Promocao
 from datetime import datetime
+import json
 
 class PromocaoController:
     @staticmethod
@@ -40,29 +41,50 @@ class PromocaoController:
 
     @staticmethod
     def editar_promocao(id, nome_promocao, valor_promocao, data_inicio, data_fim, status):
-        agora = datetime.now()
-        if datetime.fromisoformat(data_inicio) <= agora:
-            raise ValueError("A data de início deve ser depois da hora atual.")
-        if datetime.fromisoformat(data_fim) <= datetime.fromisoformat(data_inicio):
-            raise ValueError("A data de fim deve ser depois da data de início.")
-        if float(valor_promocao) > 10:
-            raise ValueError("O valor da promoção não pode exceder R$10,00.")
-
         connection = get_connection()
         cursor = connection.cursor()
 
-        # Atualiza promoção
+        # Busca os valores atuais no banco
+        cursor.execute("""
+            SELECT nome_promocao, valor_promocao, data_inicio, data_fim, status
+            FROM agendamentos
+            WHERE id = ?
+        """, (id,))
+        promocao_atual = cursor.fetchone()
+
+        if not promocao_atual:
+            raise ValueError("Promoção com o ID fornecido não encontrada.")
+
+        # Mantém os valores antigos caso os novos estejam vazios
+        nova_promocao = {
+            "nome_promocao": nome_promocao or promocao_atual[0],
+            "valor_promocao": valor_promocao or promocao_atual[1],
+            "data_inicio": data_inicio or promocao_atual[2],
+            "data_fim": data_fim or promocao_atual[3],
+            "status": status or promocao_atual[4],
+        }
+
+        # Determina as colunas alteradas
+        colunas_alteradas = []
+        for coluna, valor_novo in nova_promocao.items():
+            valor_antigo = promocao_atual[list(nova_promocao.keys()).index(coluna)]
+            if str(valor_antigo) != str(valor_novo):
+                colunas_alteradas.append(coluna)
+
+        # Atualiza a promoção
         cursor.execute("""
             UPDATE agendamentos
             SET nome_promocao = ?, valor_promocao = ?, data_inicio = ?, data_fim = ?, status = ?
             WHERE id = ?
-        """, (nome_promocao, valor_promocao, data_inicio, data_fim, status, id))
+        """, (nova_promocao["nome_promocao"], nova_promocao["valor_promocao"],
+              nova_promocao["data_inicio"], nova_promocao["data_fim"], nova_promocao["status"], id))
 
-        # Insere histórico
+        # Registra o histórico da alteração
         cursor.execute("""
-            INSERT INTO historico_alteracoes (id_promocao, alteracao)
-            VALUES (?, ?)
-        """, (id, f"Promoção editada: nome={nome_promocao}, valor={valor_promocao}, início={data_inicio}, fim={data_fim}, status={status}"))
+            INSERT INTO historico_alteracoes (id_promocao, promocao_antes, promocao_depois, alteracao)
+            VALUES (?, ?, ?, ?)
+        """, (id, json.dumps(dict(zip(nova_promocao.keys(), promocao_atual))),
+              json.dumps(nova_promocao), json.dumps(colunas_alteradas)))
 
         connection.commit()
         cursor.close()

@@ -26,7 +26,9 @@ def create_tables():
         CREATE TABLE IF NOT EXISTS historico_alteracoes (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             id_promocao INTEGER NOT NULL,
-            alteracao TEXT NOT NULL,
+            promocao_antes JSON NOT NULL,
+            promocao_depois JSON NOT NULL,
+            alteracao JSON NOT NULL,
             data_alteracao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (id_promocao) REFERENCES agendamentos (id)
         )

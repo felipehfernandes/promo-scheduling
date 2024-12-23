@@ -19,7 +19,7 @@ def main():
             PromocaoView.exibir_promocoes(promocoes)
         elif opcao == "3":
             id = input("Digite o ID da Promoção a editar: ")
-            dados = PromocaoView.solicitar_dados_promocao()
+            dados = PromocaoView.solicitar_dados_promocao_edicao()
             PromocaoController.editar_promocao(id, *dados)
         elif opcao == "4":
             dados = PromocaoView.solicitar_dados_alteracao_status()
