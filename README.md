@@ -19,20 +19,8 @@ Este é um projeto simples de gerenciamento de promoções utilizando Python, ar
     ```bash
     pip install -r requirements.txt
     ```
-   
-4. Configure o banco de dados PostgreSQL:
-   - Crie um banco de dados chamado promocoes_db.
-   - Atualize o arquivo config.py com suas credenciais do PostgreSQL:
 
-    ```python
-    database="promocoes_db",
-    user="seu_usuario",
-    password="sua_senha",
-    host="localhost",
-    port="5432"
-   ```
-   
-5. Execute o script para criar a tabela no banco de dados:
+4. Execute o script para criar a tabela no banco de dados:
     ```bash
     python -c "from models.database import create_tables; create_tables()"
     ```
