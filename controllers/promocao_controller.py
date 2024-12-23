@@ -4,7 +4,7 @@ from datetime import datetime
 
 class PromocaoController:
     @staticmethod
-    def criar_promocao(nome_promocao, valor_promocao, data_inicio, data_fim):
+    def criar_promocao(nome_promocao, valor_promocao, data_inicio, data_fim, status):
         # Validações
         agora = datetime.now()
         if datetime.fromisoformat(data_inicio) <= agora:
@@ -17,9 +17,9 @@ class PromocaoController:
         connection = get_connection()
         cursor = connection.cursor()
         cursor.execute("""
-            INSERT INTO agendamentos (nome_promocao, valor_promocao, data_inicio, data_fim)
-            VALUES (?, ?, ?, ?)
-        """, (nome_promocao, valor_promocao, data_inicio, data_fim))
+            INSERT INTO agendamentos (nome_promocao, valor_promocao, data_inicio, data_fim, status)
+            VALUES (?, ?, ?, ?, ?)
+        """, (nome_promocao, valor_promocao, data_inicio, data_fim, status))
         connection.commit()
         cursor.close()
         connection.close()
@@ -63,6 +63,26 @@ class PromocaoController:
             INSERT INTO historico_alteracoes (id_promocao, alteracao)
             VALUES (?, ?)
         """, (id, f"Promoção editada: nome={nome_promocao}, valor={valor_promocao}, início={data_inicio}, fim={data_fim}, status={status}"))
+
+        connection.commit()
+        cursor.close()
+        connection.close()
+
+    @staticmethod
+    def alterar_status_promocao(id, novo_status):
+        connection = get_connection()
+        cursor = connection.cursor()
+        cursor.execute("""
+            UPDATE agendamentos
+            SET status = ?
+            WHERE id = ?
+        """, (novo_status, id))
+
+        # Insere no histórico a alteração do status
+        cursor.execute("""
+            INSERT INTO historico_alteracoes (id_promocao, alteracao)
+            VALUES (?, ?)
+        """, (id, f"Status alterado para {novo_status}"))
 
         connection.commit()
         cursor.close()
