@@ -1,8 +1,8 @@
 class Promocao:
-    def __init__(self, id, nomepromocao, valorpromocao, datainicio, datafim, datacriacao=None):
+    def __init__(self, id, nome_promocao, valor_promocao, data_inicio, data_fim, data_criacao):
         self.id = id
-        self.nomepromocao = nomepromocao
-        self.valorpromocao = valorpromocao
-        self.datainicio = datainicio
-        self.datafim = datafim
-        self.datacriacao = datacriacao
+        self.nome_promocao = nome_promocao
+        self.valor_promocao = float(valor_promocao)  # Converte para float
+        self.data_inicio = data_inicio
+        self.data_fim = data_fim
+        self.data_criacao = data_criacao

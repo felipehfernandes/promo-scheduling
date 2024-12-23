@@ -1,15 +1,25 @@
 from models.database import get_connection
 from models.promocao import Promocao
+from datetime import datetime
 
 class PromocaoController:
     @staticmethod
-    def criar_promocao(nomepromocao, valorpromocao, datainicio, datafim):
+    def criar_promocao(nome_promocao, valor_promocao, data_inicio, data_fim):
+        # Validações
+        agora = datetime.now()
+        if datetime.fromisoformat(data_inicio) <= agora:
+            raise ValueError("A data de início deve ser depois da hora atual.")
+        if datetime.fromisoformat(data_fim) <= datetime.fromisoformat(data_inicio):
+            raise ValueError("A data de fim deve ser depois da data de início.")
+        if float(valor_promocao) > 10:
+            raise ValueError("O valor da promoção não pode exceder R$10,00.")
+
         connection = get_connection()
         cursor = connection.cursor()
         cursor.execute("""
-            INSERT INTO agendamentos (nomepromocao, valorpromocao, datainicio, datafim)
+            INSERT INTO agendamentos (nome_promocao, valor_promocao, data_inicio, data_fim)
             VALUES (?, ?, ?, ?)
-        """, (nomepromocao, valorpromocao, datainicio, datafim))
+        """, (nome_promocao, valor_promocao, data_inicio, data_fim))
         connection.commit()
         cursor.close()
         connection.close()
@@ -18,30 +28,42 @@ class PromocaoController:
     def listar_promocoes():
         connection = get_connection()
         cursor = connection.cursor()
-        cursor.execute("SELECT * FROM agendamentos")
+        cursor.execute("""
+            SELECT a.id, a.nome_promocao, a.valor_promocao, a.data_inicio, a.data_fim, s.nome AS status, a.data_criacao
+            FROM agendamentos a
+            INNER JOIN status s ON a.status = s.id
+        """)
         resultados = cursor.fetchall()
         cursor.close()
         connection.close()
         return [Promocao(*r) for r in resultados]
 
     @staticmethod
-    def editar_promocao(id, nomepromocao, valorpromocao, datainicio, datafim):
+    def editar_promocao(id, nome_promocao, valor_promocao, data_inicio, data_fim, status):
+        agora = datetime.now()
+        if datetime.fromisoformat(data_inicio) <= agora:
+            raise ValueError("A data de início deve ser depois da hora atual.")
+        if datetime.fromisoformat(data_fim) <= datetime.fromisoformat(data_inicio):
+            raise ValueError("A data de fim deve ser depois da data de início.")
+        if float(valor_promocao) > 10:
+            raise ValueError("O valor da promoção não pode exceder R$10,00.")
+
         connection = get_connection()
         cursor = connection.cursor()
+
+        # Atualiza promoção
         cursor.execute("""
             UPDATE agendamentos
-            SET nomepromocao = ?, valorpromocao = ?, datainicio = ?, datafim = ?
+            SET nome_promocao = ?, valor_promocao = ?, data_inicio = ?, data_fim = ?, status = ?
             WHERE id = ?
-        """, (nomepromocao, valorpromocao, datainicio, datafim, id))
-        connection.commit()
-        cursor.close()
-        connection.close()
+        """, (nome_promocao, valor_promocao, data_inicio, data_fim, status, id))
 
-    @staticmethod
-    def excluir_promocao(id):
-        connection = get_connection()
-        cursor = connection.cursor()
-        cursor.execute("DELETE FROM agendamentos WHERE id = ?", (id,))
+        # Insere histórico
+        cursor.execute("""
+            INSERT INTO historico_alteracoes (id_promocao, alteracao)
+            VALUES (?, ?)
+        """, (id, f"Promoção editada: nome={nome_promocao}, valor={valor_promocao}, início={data_inicio}, fim={data_fim}, status={status}"))
+
         connection.commit()
         cursor.close()
         connection.close()
