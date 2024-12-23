@@ -13,7 +13,8 @@ def main():
 
         if opcao == "1":
             dados = PromocaoView.solicitar_dados_promocao()
-            PromocaoController.criar_promocao(*dados)
+            regioes_ids = PromocaoView.solicitar_regioes()
+            PromocaoController.criar_promocao(*dados, regioes_ids)
         elif opcao == "2":
             promocoes = PromocaoController.listar_promocoes()
             PromocaoView.exibir_promocoes(promocoes)
