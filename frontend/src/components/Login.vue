@@ -1,17 +1,17 @@
 <template>
-  <div class="login-container" style="display: flex; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(to bottom, black 50%, white 50%);">
-    <div style="background-color: white; padding: 40px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); width: 300px;">
-      <h2 style="text-align: center;">Faça login</h2>
-      <form @submit.prevent="login" style="display: flex; flex-direction: column; align-items: center;">
-        <div style="margin-bottom: 15px; width: 80%;">
-          <input type="email" v-model="email" id="email" placeholder="Email" required style="width: 100%; padding: 8px; margin-top: 5px;">
+  <div class="login-container">
+    <div class="login-form">
+      <h2>Faça login</h2>
+      <form @submit.prevent="login">
+        <div class="input-container">
+          <input type="email" v-model="email" id="email" placeholder="Email" required />
         </div>
-        <div style="margin-bottom: 15px; width: 80%;">
-          <input type="password" v-model="password" id="password" placeholder="Senha" required style="width: 100%; padding: 8px; margin-top: 5px;">
+        <div class="input-container">
+          <input type="password" v-model="password" id="password" placeholder="Senha" required />
         </div>
-        <button type="submit" style="width: 80%; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Entrar</button>
+        <button type="submit">Entrar</button>
       </form>
-      <p style="text-align: center; margin-top: 20px;">Não tem uma conta? <a @click="toggleMode" style="color: #4CAF50; cursor: pointer;">Faça seu cadastro</a></p>
+      <p>Não tem uma conta? <a @click="toggleMode">Faça seu cadastro</a></p>
     </div>
   </div>
 </template>
@@ -58,5 +58,61 @@ export default {
 </script>
 
 <style scoped>
-/* Removed styles as they are now inline */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  /* background: linear-gradient(to bottom, black 50%, white 50%); */
+}
+
+.login-form {
+  background-color: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+
+h2 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-container {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+p {
+  text-align: center;
+  margin-top: 20px;
+}
+
+a {
+  color: #4CAF50;
+  cursor: pointer;
+}
 </style>

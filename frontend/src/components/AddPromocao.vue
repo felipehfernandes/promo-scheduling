@@ -67,7 +67,12 @@
           </div>
         </div>
       </div>
-      <button type="submit">Criar Promoção</button>
+      <button
+        type="submit"
+        :disabled="!isFormValid"
+        :class="{'disabled-btn': !isFormValid}">
+        Criar Promoção
+      </button>
     </form>
     <div v-if="errorMessage" class="error-box">
       {{ errorMessage }}
@@ -99,6 +104,16 @@ export default {
   },
   created() {
     this.fetchRegioes();
+  },
+  computed: {
+    isFormValid() {
+      return this.novaPromocao.nome_promocao &&
+             this.novaPromocao.valor_promocao &&
+             this.novaPromocao.data_inicio &&
+             this.novaPromocao.data_fim &&
+             this.novaPromocao.status &&
+             this.novaPromocao.regioes.length > 0;
+    }
   },
   methods: {
     // Busca as regiões do backend
@@ -165,11 +180,17 @@ export default {
 </script>
 
 <style>
+body {
+  margin-left: 80px; /* Espaço para a barra lateral */
+  background-color: rgb(249 250 251); /* Cor de fundo da página inteira */
+}
+
 .main-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 1.5rem;
+  background-color: rgb(249 250 251);
 }
 
 .form-container {
@@ -271,6 +292,31 @@ button:hover {
   color: #007BFF;
 }
 
+/* Botão */
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+button {
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  background-color: #007BFF;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.disabled-btn {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
 
 @media (max-width: 600px) {
   .form-container {
