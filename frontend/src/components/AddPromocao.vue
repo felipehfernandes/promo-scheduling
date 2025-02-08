@@ -20,14 +20,14 @@
       </div>
       <div style="flex: 1 1 45%; min-width: 250px;">
         <label for="status">Status:</label>
-        <select v-model="novaPromocao.status" id="status" style="width: 100%; padding: 8px;">
+        <select v-model="novaPromocao.status" id="status" style="width: 30%;">
           <option :value="1">Vigente</option>
           <option :value="2">Desativado</option>
         </select>
       </div>
       <div style="flex: 1 1 45%; min-width: 250px;">
         <label for="regioes">Regiões:</label>
-        <multiselect v-model="selectedRegioes" :options="regioes" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Selecione as regiões" label="nome" track-by="id" style="width: 100%; padding: 8px;"></multiselect>
+        <multiselect v-model="selectedRegioes" :options="regioes" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Selecione as regiões" label="nome" track-by="id" style="width: 30%;"></multiselect>
       </div>
       <button type="submit" style="flex: 1 1 100%; width: 100px; margin: 0 auto;">Criar Promoção</button>
     </form>
