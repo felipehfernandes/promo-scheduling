@@ -15,21 +15,29 @@ Este é um projeto simples de gerenciamento de promoções utilizando Python, ar
     python -m venv venv
     venv\Scripts\activate
     ```
-3. Instale as dependências do projeto:
+
+3. Instale as dependências do projeto executando o script:
     ```bash
-    pip install -r requirements.txt
+    bash install_dependencies.sh
     ```
 
 4. Execute o script para criar a tabela no banco de dados:
     ```bash
     python -c "from models.database import create_tables; create_tables()"
     ```
-   
+
 ## Executando a Aplicação
-Inicie o programa com o seguinte comando:
+
+Para iniciar o backend, execute:
 
 ```bash
 python app.py
+```
+
+Para iniciar o frontend, navegue até o diretório `frontend` e execute:
+
+```bash
+npm run serve
 ```
 
 Você verá as opções no menu principal. Escolha a ação desejada e siga as instruções no terminal.
@@ -51,7 +59,9 @@ promocoes_app/
 ├── views/             # Diretório para as interfaces
 │   ├── __init__.py    # Inicializador do módulo
 │   └── promocao_view.py  # Interface com o usuário
+├── frontend/          # Diretório para o frontend Vue.js
+│   ├── src/           # Código-fonte do frontend
+│   ├── public/        # Arquivos públicos
+│   └── package.json   # Dependências do frontend
 ├── requirements.txt   # Dependências do projeto
 └── README.md          # Documentação do projeto
-
-```

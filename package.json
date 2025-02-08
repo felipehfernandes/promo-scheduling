@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "socket.io-client": "^4.8.1",
+    "vue-multiselect": "^3.2.0",
+    "vue-router": "^4.5.0"
+  }
+}

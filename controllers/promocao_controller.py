@@ -42,9 +42,22 @@ class PromocaoController:
             INNER JOIN status s ON a.status = s.id
         """)
         resultados = cursor.fetchall()
+
+        promocoes = []
+        for promocao in resultados:
+            # Obter as regiões associadas
+            cursor.execute("""
+                SELECT r.uf || ' - ' || r.estado
+                FROM promocoes_regioes pr
+                INNER JOIN regioes r ON pr.id_regiao = r.id
+                WHERE pr.id_promocao = ?
+            """, (promocao[0],))
+            regioes = [r[0] for r in cursor.fetchall()]
+            promocoes.append(Promocao(*promocao, regioes=regioes))
+
         cursor.close()
         connection.close()
-        return [Promocao(*r) for r in resultados]
+        return promocoes
 
     @staticmethod
     def editar_promocao(id, nome_promocao, valor_promocao, data_inicio, data_fim, status, regioes_ids):
