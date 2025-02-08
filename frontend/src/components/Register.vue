@@ -1,18 +1,21 @@
 <template>
-  <div class="register-container">
-    <h2>Registrar</h2>
-    <form @submit.prevent="register">
-      <div>
-        <label for="email">Email:</label>
-        <input type="email" v-model="email" id="email" required>
-      </div>
-      <div>
-        <label for="password">Senha:</label>
-        <input type="password" v-model="password" id="password" required>
-      </div>
-      <button type="submit">Registrar</button>
-    </form>
-    <p>Já tem uma conta? <a @click="toggleMode">Faça login</a></p>
+  <div class="register-container" style="display: flex; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(to bottom, black 50%, white 50%);">
+    <div style="background-color: white; padding: 40px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); width: 300px;">
+      <h2 style="text-align: center;">Faça o cadastro</h2>
+      <form @submit.prevent="register" style="display: flex; flex-direction: column; align-items: center;">
+        <div style="margin-bottom: 15px; width: 100%;">
+          <input type="email" v-model="email" id="email" placeholder="Email" required style="width: 100%; padding: 8px; margin-top: 5px;">
+        </div>
+        <div style="margin-bottom: 15px; width: 100%;">
+          <input type="password" v-model="password" id="password" placeholder="Senha" required style="width: 100%; padding: 8px; margin-top: 5px;">
+        </div>
+        <div style="margin-bottom: 15px; width: 100%;">
+          <input type="password" v-model="confirmPassword" id="confirmPassword" placeholder="Confirme a Senha" required style="width: 100%; padding: 8px; margin-top: 5px;">
+        </div>
+        <button type="submit" style="width: 100%; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Registrar</button>
+      </form>
+      <p style="text-align: center; margin-top: 20px;">Já tem uma conta? <a @click="toggleMode" style="color: #4CAF50; cursor: pointer;">Faça login</a></p>
+    </div>
   </div>
 </template>
 
@@ -22,11 +25,20 @@ export default {
   data() {
     return {
       email: '',
-      password: ''
+      password: '',
+      confirmPassword: ''
     };
   },
   methods: {
     register() {
+      if (this.password.length < 8) {
+        alert('A senha deve ter mais de 8 caracteres.');
+        return;
+      }
+      if (this.password !== this.confirmPassword) {
+        alert('As senhas não são iguais.');
+        return;
+      }
       fetch('http://localhost:5000/register', {
         method: 'POST',
         headers: {
@@ -36,16 +48,17 @@ export default {
       })
       .then(response => {
         if (!response.ok) {
-          return response.json().then(err => { throw new Error(err.error); });
+          throw new Error('Erro ao registrar.');
         }
         return response.json();
       })
       .then(() => {
         alert('Registro realizado com sucesso!');
+        this.$emit('toggle-mode');
       })
       .catch(error => {
         console.error('Erro ao registrar:', error);
-        alert('Erro ao registrar: ' + error.message);
+        alert('Erro ao registrar.');
       });
     },
     toggleMode() {
@@ -56,42 +69,5 @@ export default {
 </script>
 
 <style scoped>
-.register-container {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-}
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-input {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-button:hover {
-  background-color: #45a049;
-}
-p {
-  text-align: center;
-}
-a {
-  cursor: pointer;
-  color: #4CAF50;
-}
+/* Removed styles as they are now inline in the template */
 </style>

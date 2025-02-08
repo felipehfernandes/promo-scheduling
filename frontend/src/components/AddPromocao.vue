@@ -1,35 +1,35 @@
 <template>
-  <div>
+  <div class="main-content">
     <h2>Criar Promoção</h2>
-    <form @submit.prevent="adicionarPromocao()">
-      <div>
+    <form @submit.prevent="adicionarPromocao()" style="display: flex; flex-wrap: wrap; gap: 10px;">
+      <div style="flex: 1 1 45%; min-width: 250px;">
         <label for="nome_promocao">Nome da Promoção:</label>
         <input type="text" v-model="novaPromocao.nome_promocao" id="nome_promocao" required />
       </div>
-      <div>
+      <div style="flex: 1 1 45%; min-width: 250px;">
         <label for="valor_promocao">Valor da Promoção:</label>
         <input type="number" v-model="novaPromocao.valor_promocao" id="valor_promocao" required />
       </div>
-      <div>
+      <div style="flex: 1 1 45%; min-width: 250px;">
         <label for="data_inicio">Data de Início:</label>
         <input type="datetime-local" v-model="novaPromocao.data_inicio" id="data_inicio" required />
       </div>
-      <div>
+      <div style="flex: 1 1 45%; min-width: 250px;">
         <label for="data_fim">Data de Fim:</label>
         <input type="datetime-local" v-model="novaPromocao.data_fim" id="data_fim" required />
       </div>
-      <div>
+      <div style="flex: 1 1 45%; min-width: 250px;">
         <label for="status">Status:</label>
-        <select v-model="novaPromocao.status" id="status">
+        <select v-model="novaPromocao.status" id="status" style="width: 100%; padding: 8px;">
           <option :value="1">Vigente</option>
           <option :value="2">Desativado</option>
         </select>
       </div>
-      <div>
+      <div style="flex: 1 1 45%; min-width: 250px;">
         <label for="regioes">Regiões:</label>
-        <multiselect v-model="selectedRegioes" :options="regioes" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Selecione as regiões" label="nome" track-by="id"></multiselect>
+        <multiselect v-model="selectedRegioes" :options="regioes" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Selecione as regiões" label="nome" track-by="id" style="width: 100%; padding: 8px;"></multiselect>
       </div>
-      <button type="submit">Criar Promoção</button>
+      <button type="submit" style="flex: 1 1 100%; width: 100px; margin: 0 auto;">Criar Promoção</button>
     </form>
     <div v-if="errorMessage" class="error-box">
       {{ errorMessage }}

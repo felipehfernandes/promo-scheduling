@@ -3,8 +3,12 @@ import App from './App.vue';
 import router from './router';
 import { io } from 'socket.io-client';
 
+// import Toast from 'vue-toastification';
+// import 'vue-toastification/dist/index.css';
+
 createApp(App)
   .use(router)  // Integrar o roteador
+  // .use(Toast) // Configure Vue Toastification
   .mount('#app');
 
 const socket = io('http://localhost:5000');
