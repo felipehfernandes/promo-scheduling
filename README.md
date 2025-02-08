@@ -1,4 +1,4 @@
-# Promoções App
+# Promo Scheduling
 
 Este é um projeto simples de gerenciamento de promoções utilizando Python, arquitetura MVC, e banco de dados PostgreSQL.
 
@@ -47,6 +47,7 @@ Você verá as opções no menu principal. Escolha a ação desejada e siga as i
 ```bash
 promocoes_app/
 │
+<<<<<<< HEAD
 ├── app.py             # Arquivo principal para rodar a aplicação
 ├── config.py          # Configuração do banco de dados
 ├── models/            # Diretório para os modelos
@@ -65,3 +66,22 @@ promocoes_app/
 │   └── package.json   # Dependências do frontend
 ├── requirements.txt   # Dependências do projeto
 └── README.md          # Documentação do projeto
+=======
+├── app.py
+├── config.py
+├── models/
+│   ├── __init__.py
+│   ├── database.py
+│   └── promocao.py
+├── controllers/
+│   ├── __init__.py
+│   └── promocao_controller.py
+├── views/
+│   ├── __init__.py
+│   └── promocao_view.py
+├── requirements.txt
+└── README.md
+
+
+```
+>>>>>>> 04cc5b54cc179747d0a22416960c199505bee22c
