@@ -13,7 +13,9 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  console.log(`Navigating to: ${to.path}`);
   const isAuthenticated = !!localStorage.getItem('authToken');
+  console.log(`User is authenticated: ${isAuthenticated}`);
   if (to.name !== 'Login' && !isAuthenticated) {
     next({ name: 'Login' });
   } else {

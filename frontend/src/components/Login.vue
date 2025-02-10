@@ -41,8 +41,8 @@ export default {
         return response.json();
       })
       .then(data => {
-        alert('Login realizado com sucesso!');
-        console.log('Token:', data.access_token);
+        // alert('Login realizado com sucesso!');
+        // console.log('Token:', data.access_token);
         this.$emit('authenticate');
       })
       .catch(error => {
