@@ -19,12 +19,21 @@
         <span class="menu-text">Listar Promoções</span>
       </li>
 
+      <!-- Botão de Logout -->
+      <li v-if="isExpanded" @click="logout" :class="{'selected': selectedSection === 'Logout'}">
+        <span class="menu-icon material-icons">exit_to_app</span>
+        <span class="menu-text">Logout</span>
+      </li>
+
       <!-- Exibição compactada -->
       <li v-if="!isExpanded" @click="$emit('navigate', 'CreatePromotion')" :class="{'selected': selectedSection === 'CreatePromotion'}">
         <span class="menu-icon material-icons">add</span>
       </li>
       <li v-if="!isExpanded" @click="$emit('navigate', 'ListPromotions')" :class="{'selected': selectedSection === 'ListPromotions'}">
         <span class="menu-icon material-icons">list_alt</span>
+      </li>
+      <li v-if="!isExpanded" @click="logout" :class="{'selected': selectedSection === 'Logout'}">
+        <span class="menu-icon material-icons">exit_to_app</span>
       </li>
     </ul>
   </div>
@@ -42,6 +51,19 @@ export default {
   methods: {
     toggleSidebar() {
       this.isExpanded = !this.isExpanded;
+    },
+    logout() {
+      // Clear local storage and session storage
+      localStorage.clear();
+      sessionStorage.clear();
+      
+      // Clear authentication token
+      this.$store.dispatch('logout');
+      
+      console.log("Logout successful");
+
+      // Redirect to login page
+      this.$router.push({ name: 'Login' });
     }
   }
 };

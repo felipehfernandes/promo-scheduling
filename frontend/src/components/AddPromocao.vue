@@ -139,7 +139,7 @@ export default {
         data_inicio: this.novaPromocao.data_inicio,
         data_fim: this.novaPromocao.data_fim,
         status: this.novaPromocao.status,
-        regioes_ids: this.selectedRegioes.map(regiao => regiao.id).join(',')
+        regioes_ids: this.novaPromocao.regioes.map(regiao => regiao) // Send as an array
       };
       fetch('http://localhost:5000/promocoes', {
         method: 'POST',

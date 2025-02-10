@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
+import store from './store';
 import { io } from 'socket.io-client';
 
 // import Toast from 'vue-toastification';
@@ -8,6 +9,7 @@ import { io } from 'socket.io-client';
 
 createApp(App)
   .use(router)  // Integrar o roteador
+  .use(store)   // Integrar o Vuex store
   // .use(Toast) // Configure Vue Toastification
   .mount('#app');
 
