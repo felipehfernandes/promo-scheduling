@@ -42,12 +42,46 @@ npm run serve
 
 Você verá as opções no menu principal. Escolha a ação desejada e siga as instruções no terminal.
 
+## Dockerização
+
+Para facilitar a execução do projeto, você pode utilizar Docker. Siga os passos abaixo para construir e executar o projeto em um container Docker.
+
+### Construir a Imagem Docker
+
+1. Certifique-se de ter o Docker instalado e em execução em sua máquina.
+
+2. Navegue até o diretório raiz do projeto e execute o seguinte comando para construir a imagem Docker:
+   ```bash
+   docker build -t promo-scheduling .
+   ```
+
+### Executar o Container Docker
+
+1. Após a construção da imagem, execute o seguinte comando para iniciar o container:
+   ```bash
+   docker run -p 8000:8000 promo-scheduling
+   ```
+
+2. O aplicativo estará disponível em `http://localhost:8000`.
+
+## Build do Projeto
+
+Para construir o projeto localmente sem Docker, siga os passos abaixo:
+
+1. Certifique-se de que todas as dependências estejam instaladas conforme descrito na seção "Configurando o Ambiente".
+
+2. Execute o seguinte comando para construir o projeto:
+   ```bash
+   npm run build
+   ```
+
+3. O projeto estará pronto para ser servido em um servidor de produção.
+
 ## Estrutura do Projeto
 
 ```bash
 promocoes_app/
 │
-<<<<<<< HEAD
 ├── app.py             # Arquivo principal para rodar a aplicação
 ├── config.py          # Configuração do banco de dados
 ├── models/            # Diretório para os modelos
@@ -66,22 +100,3 @@ promocoes_app/
 │   └── package.json   # Dependências do frontend
 ├── requirements.txt   # Dependências do projeto
 └── README.md          # Documentação do projeto
-=======
-├── app.py
-├── config.py
-├── models/
-│   ├── __init__.py
-│   ├── database.py
-│   └── promocao.py
-├── controllers/
-│   ├── __init__.py
-│   └── promocao_controller.py
-├── views/
-│   ├── __init__.py
-│   └── promocao_view.py
-├── requirements.txt
-└── README.md
-
-
-```
->>>>>>> 04cc5b54cc179747d0a22416960c199505bee22c

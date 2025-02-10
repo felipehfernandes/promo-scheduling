@@ -20,10 +20,10 @@
       </li>
 
       <!-- Botão de Logout -->
-      <li v-if="isExpanded" @click="logout" :class="{'selected': selectedSection === 'Logout'}">
+      <!-- <li v-if="isExpanded" @click="logout" :class="{'selected': selectedSection === 'Logout'}">
         <span class="menu-icon material-icons">exit_to_app</span>
         <span class="menu-text">Logout</span>
-      </li>
+      </li> -->
 
       <!-- Exibição compactada -->
       <li v-if="!isExpanded" @click="$emit('navigate', 'CreatePromotion')" :class="{'selected': selectedSection === 'CreatePromotion'}">
@@ -32,9 +32,9 @@
       <li v-if="!isExpanded" @click="$emit('navigate', 'ListPromotions')" :class="{'selected': selectedSection === 'ListPromotions'}">
         <span class="menu-icon material-icons">list_alt</span>
       </li>
-      <li v-if="!isExpanded" @click="logout" :class="{'selected': selectedSection === 'Logout'}">
+      <!-- <li v-if="!isExpanded" @click="logout" :class="{'selected': selectedSection === 'Logout'}">
         <span class="menu-icon material-icons">exit_to_app</span>
-      </li>
+      </li> -->
     </ul>
   </div>
 </template>
