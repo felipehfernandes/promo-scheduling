@@ -40,7 +40,7 @@ export default {
         }
         return response.json();
       })
-      .then(data => {
+      .then(() => {
         // alert('Login realizado com sucesso!');
         // console.log('Token:', data.access_token);
         this.$emit('authenticate');
