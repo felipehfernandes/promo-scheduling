@@ -17,6 +17,8 @@
 </template>
 
 <script>
+const apiUrl = 'http://localhost:5000';
+
 export default {
   name: 'LoginForm',
   data() {
@@ -27,7 +29,7 @@ export default {
   },
   methods: {
     login() {
-      fetch('http://localhost:5000/login', {
+      fetch(`${apiUrl}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

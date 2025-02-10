@@ -27,6 +27,8 @@
 </template>
 
 <script>
+const apiUrl = 'http://localhost:5000';
+
 export default {
   data() {
     return {
@@ -34,7 +36,7 @@ export default {
     };
   },
   created() {
-    fetch('http://localhost:5000/promocoes')
+    fetch(`${apiUrl}/promocoes`)
       .then(response => response.json())
       .then(data => {
         this.promocoes = data;

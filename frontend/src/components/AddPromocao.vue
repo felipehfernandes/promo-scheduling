@@ -84,6 +84,8 @@
 // import Multiselect from 'vue-multiselect';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 
+const apiUrl = 'http://localhost:5000';
+
 export default {
   name: 'AddPromocao',
   // components: { Multiselect },
@@ -118,7 +120,7 @@ export default {
   methods: {
     // Busca as regiões do backend
     fetchRegioes() {
-      fetch('http://localhost:5000/regioes')
+      fetch(`${apiUrl}/regioes`)
         .then(response => response.json())
         .then(data => {
           this.regioes = data.map(regiao => ({
@@ -141,7 +143,7 @@ export default {
         status: this.novaPromocao.status,
         regioes_ids: this.novaPromocao.regioes.map(regiao => regiao) // Send as an array
       };
-      fetch('http://localhost:5000/promocoes', {
+      fetch(`${apiUrl}/promocoes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

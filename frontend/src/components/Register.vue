@@ -20,6 +20,8 @@
 </template>
 
 <script>
+const apiUrl = 'http://localhost:5000';
+
 export default {
   name: 'RegisterForm',
   data() {
@@ -39,7 +41,7 @@ export default {
         alert('As senhas não são iguais.');
         return;
       }
-      fetch('http://localhost:5000/register', {
+      fetch(`${apiUrl}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
